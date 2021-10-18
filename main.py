@@ -51,8 +51,7 @@ def generate_sequence_idx(frame_id, sequence_length, tot_sequences):
     return idx[:sequence_length]
 
 
-def main():
-    params = utils.upload_args_from_json(file_path="config.json")
+def main(params):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     setattr(params, "device", device)
     print("Using {} device".format(device))
@@ -77,4 +76,5 @@ def main():
     utils.build_video(frames)
 
 if __name__ == '__main__':
-    main()
+    args = utils.upload_args()
+    main(args)
