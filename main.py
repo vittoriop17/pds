@@ -63,9 +63,9 @@ def main(params):
     mean, std = train_dataset.get_stats()
     test_dataset = dataset.MarkersDataset(params, train=False, mean=mean, std=std)
     cols_coords = train_dataset.cols_coords
-    train_pred = model(train_dataset.input_dataset)
+    train_pred = model(train_dataset.input_dataset.to(device))
     train_pred = (train_pred.detach().numpy() * std[cols_coords]) + mean[cols_coords]
-    test_pred = model(test_dataset.input_dataset)
+    test_pred = model(test_dataset.input_dataset.to(device))
     test_pred = (test_pred.detach().numpy() * std[cols_coords]) + mean[cols_coords]
     save_trajectories(train_dataset, test_dataset, train_pred, test_pred, params)
 
