@@ -15,14 +15,14 @@ def upload_args():
     parser.add_argument("--lr", required=False, type=float)
     parser.add_argument("--batch_size", required=False, type=int)
     parser.add_argument("--train", required=False, type=bool)
-    parser.add_argument("--train", required=False, type=bool)
     parser.add_argument("--video", required=False, type=str, help="Video path. Video used for evaluation of results")
     args = parser.parse_args()
     args = upload_args_from_json(args)
+    print(args)
     return args
 
 
-def upload_args_from_json(args, file_path=os.path.join("..", "config.json")):
+def upload_args_from_json(args, file_path=os.path.join("config.json")):
     if args is None:
         parser = argparse.ArgumentParser(description=f'Arguments from json')
         args = parser.parse_args()
@@ -30,7 +30,7 @@ def upload_args_from_json(args, file_path=os.path.join("..", "config.json")):
     for option, option_value in json_params.items():
         # do not override pre-existing arguments, if present.
         # In other terms, the arguments passed through CLI have the priority
-        if hasattr(args, option):
+        if hasattr(args, option) and getattr(args, option) is not None:
             continue
         if option_value == 'None':
             option_value = None
